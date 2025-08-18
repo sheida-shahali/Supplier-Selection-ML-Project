@@ -1,70 +1,98 @@
-# Supplier Prediction ML Components (Public Version)
+# 🧠 Supplier Prediction ML Components (Public Version)
 
-This repository contains my contributions to a machine learning pipeline designed to predict the optimal supplier and account for each shipment order. The complete system includes multiple components; this public version shares only the parts I directly developed.
+This repository contains my contributions to a machine learning pipeline designed to predict the optimal **supplier** and **account** for each shipment order. The full system includes multiple modules; this public version shares only the components I directly developed.
 
 ---
 
-## 🔍 Overview
+## 🔍 Project Overview
 
-My work focused on two main components:
+The end-to-end ML system includes various classes and components, such as:
 
-### 1. 🏷️ Category Classifier
-An NLP-based model that classifies shipment orders based on the `goods_description` field.
+- 📦 **Shipment & Geolocation Handling** (not included)
+- 🧭 **Location and Route Optimization** (not included)
+- 🏷️ **Category Classification** ✅ *(developed by me)*
+- 🔁 **Hierarchical Supplier Prediction** ✅ *(developed by me)*
+- ⚙️ **Workflow Management & Integration** ✅ *(partially developed by me)*
 
-- **Text Preprocessing**: Lemmatization, stopword removal (EN & IT), normalization
-- **Model**: SBERT embeddings + Random Forest
-- **Fallback Rules**: Keyword-based subcategory mapping
-- **Output**: Encoded `final_category_code`
+---
 
-### 2. 🔁 Hierarchical Supplier Prediction
-A two-level machine learning model using XGBoost:
+## ✅ My Contributions
 
-- **Level 1**: Predicts the supplier
-- **Level 2**: Predicts the account within the predicted supplier
-- **Features**:
-  - SMOTE for class imbalance
+### 1. 🏷️ Category Classifier (`Category.py`)
+An NLP pipeline that classifies orders based on the `goods_description` field.
+
+- Text preprocessing (lemmatization, multilingual stopword removal)
+- Embedding with **SBERT**
+- Classification via **Random Forest**
+- Keyword-based fallback rules
+- Output: `final_category_code` (encoded)
+
+---
+
+### 2. 🔁 Hierarchical Supplier Prediction (`ModelManager.py`)
+A two-level classifier using **XGBoost**:
+
+- **Level 1:** Predicts supplier  
+- **Level 2:** Predicts account based on supplier  
+- Includes:
+  - SMOTE for class balancing
   - Stratified cross-validation
-  - Feature importance visualization
+  - Feature importance plots
   - Confusion matrix evaluation
 
 ---
 
-## 🧠 My Contributions
+### 3. ⚙️ Workflow Integration (`WorkflowManager.py`)
+I implemented core functions to integrate the category classifier and supplier predictor:
 
-- Implemented the entire `Category` classification module
-- Developed the hierarchical classification logic in `ModelManager`
-- Integrated both models into `WorkflowManager`
-- Added support for cross-validation, evaluation, and model persistence
+- Training & evaluation management
+- Model serialization and loading
+- Input validation & preprocessing
+- Note: Other classes like `Shipment` and `Location` were not developed by me
 
 ---
 
 ## ⚙️ Tech Stack
 
-- **Languages**: Python
-- **ML**: XGBoost, Random Forest, StratifiedKFold
-- **NLP**: `sentence-transformers` (SBERT), SpaCy, NLTK
-- **Utilities**: pandas, sklearn, imbalanced-learn, joblib
+| Category      | Tools |
+|---------------|-------|
+| Language      | Python |
+| ML Models     | XGBoost, Random Forest |
+| NLP           | sentence-transformers (SBERT), SpaCy, NLTK |
+| Evaluation    | scikit-learn, matplotlib |
+| Data Handling | pandas, joblib |
+| Sampling      | imbalanced-learn (SMOTE) |
 
 ---
 
 ## 🚫 Not Included
 
-This repository does not include:
-- Full pipeline components (e.g., geolocation, shipment modeling)
-- Full dataset or proprietary data
-- Pre-trained models (excluded for privacy)
+This repo **excludes** components I did not develop:
+
+- Geolocation & shipment logic (`Shipment`, `Location`)
+- Sensitive or proprietary datasets
+- Pre-trained model binaries
 
 ---
 
-## 🧪 How to Use
+## 🧪 Usage
 
-You may:
-- Train the category classifier using labeled descriptions
-- Run the hierarchical supplier model on encoded datasets
-- Evaluate model performance with provided utilities
+> ⚠️ **Note:**  
+> These modules were developed for a specific proprietary dataset with fixed columns and encodings.  
+> As such, **they are not plug-and-play** and will require modification to work on other datasets.
+
+#### You *can*:
+- Review the logic for building hierarchical ML classifiers
+- Learn how to integrate NLP and tabular models
+- Adapt portions of the code for similar projects
+
+#### You *cannot*:
+- Directly run the code on new data without restructuring inputs
+- Use the models without replicating the dataset schema
 
 ---
 
 ## 📄 License
 
-This is a personal contribution extracted from a larger private project. Use of this code is for educational or demonstrative purposes only.
+This code is part of a **private project**, shared here only for educational or demonstrative purposes.  
+**Do not use in production or commercial settings** without permission.
