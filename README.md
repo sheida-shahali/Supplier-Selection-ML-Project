@@ -1,4 +1,4 @@
-# Supplier Prediction ML Components (Public Version)
+# Supplier Prediction – Machine Learning Components (Public Version)
 
 This repository contains my contributions to a larger machine learning system built for supplier and account prediction in a logistics context. The complete pipeline includes multiple modules; here, I've shared only the components I directly worked on.
 
